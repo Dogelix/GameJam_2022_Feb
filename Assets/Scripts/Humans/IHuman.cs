@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHuman
 {
-    public void AttackWithWeapon(Transform target);
+    public void Action(Transform target);
 }

@@ -72,7 +72,7 @@ public class Zombie : MonoBehaviour, ICharacter
     {
         if(Vector3.Distance(transform.position, _target) > 1)
         {
-            _navMeshAgent.destination = _target;
+            _navMeshAgent.SetDestination(_target);
             _animator.SetBool("Walking", true);
         }
         else

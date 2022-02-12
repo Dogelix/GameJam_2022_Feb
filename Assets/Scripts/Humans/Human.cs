@@ -47,7 +47,17 @@ public class Human : MonoBehaviour, ICharacter
 
     public void Walk()
     {
-        //throw new System.NotImplementedException();
+        if(Vector3.Distance(transform.position, _target) > 1)
+        {
+            _navMeshAgent.SetDestination(_target);
+            _animator.SetBool("Static_b", false);
+            _animator.SetFloat("Speed_f", 0.45f);
+        }
+        else
+        {
+            _animator.SetBool("Static_b", true);
+            _animator.SetFloat("Speed_f", 0f);
+        }
     }
 
     private void FixedUpdate() 
