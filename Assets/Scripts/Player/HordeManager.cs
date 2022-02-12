@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class HordeManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject[] _zombieTypes;
+
     private List<Zombie> _zombies;
+
+    private Vector3 _currentTarget;
 
     private void Awake() 
     {
@@ -15,6 +20,7 @@ public class HordeManager : MonoBehaviour
 
     public void MoveZombies(Vector3 moveLocation)
     {
+        _currentTarget = moveLocation;
         _zombies.ForEach(e => e.Target = moveLocation);
     }
 
@@ -28,5 +34,10 @@ public class HordeManager : MonoBehaviour
         _zombies.Remove(zombie);
     }
 
-    
+    public void AddZombie(Vector3 spawnLocation)
+    {
+        var zombie = Instantiate(_zombieTypes[Random.Range(0, _zombieTypes.Count())], spawnLocation, Quaternion.identity, transform);
+        _zombies.Add(zombie.GetComponent<Zombie>());
+        zombie.GetComponent<Zombie>().Target = _currentTarget;
+    }
 }

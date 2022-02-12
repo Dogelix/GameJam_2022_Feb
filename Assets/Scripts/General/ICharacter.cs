@@ -9,5 +9,6 @@ public interface ICharacter
     public void Walk();
 
     public void Die();
-    public void Attack();
+    public void Attack(Transform target);
+    public void Hit(int damage);
 }

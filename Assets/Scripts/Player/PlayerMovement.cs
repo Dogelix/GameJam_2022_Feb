@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError($"{nameof(_rigidbody)} is null");
 
         _playerActions.Player_Map.RMBClick.performed += ctx => RMBClicked();   
+        _playerActions.Player_Map.LMBClick.performed += ctx => LMBClicked(); 
 
         _hordeManager = GameObject.FindGameObjectWithTag("HordeManager").GetComponent<HordeManager>();
     }
@@ -51,7 +52,12 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.velocity = _moveInput * _playerSpeed;
     }
 
-    void RMBClicked()
+    private void LMBClicked()
+    {
+        //_hordeManager.AddZombie(Vector3.zero);
+    }
+
+    private void RMBClicked()
     {
         Plane plane = new Plane(Vector3.up, 0);
         float distance;
@@ -64,14 +70,15 @@ public class PlayerMovement : MonoBehaviour
         mousePosition.z = 20;
         Ray ray = _playerCamera.ScreenPointToRay(mousePosition);
 
-        if (plane.Raycast(ray, out distance))
-        {
-            mousePosition = ray.GetPoint(distance);
-             mousePosition.z = 0;
-        
-            _target = new Vector3(mousePosition.x, 0, mousePosition.y);
-            _hordeManager.MoveZombies(_target);
+        RaycastHit hit;
+        if (Physics.Raycast(_playerCamera.ScreenPointToRay(mousePosition), out hit, 100)) {
+            _target = hit.point;
         }
+
+        Destroy(GameObject.FindGameObjectWithTag("Indicator"));
+
+        Instantiate(Resources.Load("ClickIndicator") as GameObject, _target, Quaternion.identity);
+        _hordeManager.MoveZombies(_target);
     }
 
 

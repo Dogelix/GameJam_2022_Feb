@@ -5,11 +5,18 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour, ICharacter
 {
+    [SerializeField]
+    private int _maxDamage = 5;
+
+    [SerializeField]
+    private int _minDamage = 1;
+
     private GameObject _absoluteParent;
     private bool _isMoving = false;
     private int _hp = 5;
     private Vector3 _target;
     private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
 
     public bool Moving
     {   
@@ -21,13 +28,6 @@ public class Zombie : MonoBehaviour, ICharacter
 
     public int HP { get => _hp; set => _hp = value; }
     public Vector3 Target { get => _target; set { _target = value; } }
-
-    private Animator _animator;
-
-    public void Attack()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public void Die()
     {
@@ -41,6 +41,8 @@ public class Zombie : MonoBehaviour, ICharacter
         }
 
         gameObject.transform.parent.GetComponent<HordeManager>().RemoveZombie(this);
+
+        StartCoroutine("DeathAnimEnds");
     }
 
 
@@ -57,6 +59,15 @@ public class Zombie : MonoBehaviour, ICharacter
         if(_hp <= 0) Die();
     }
 
+    private void OnTriggerEnter(Collider other) 
+    {
+        Debug.Log(other.name);
+        if(other.GetComponent<Human>() != null)
+        {
+            Attack(other.transform);
+        }    
+    }
+
     public void Walk()
     {
         if(Vector3.Distance(transform.position, _target) > 1)
@@ -68,5 +79,22 @@ public class Zombie : MonoBehaviour, ICharacter
         {
             _animator.SetBool("Walking", false);
         }
+    }
+
+    public void Attack(Transform target)
+    {
+        target.GetComponent<Human>().Hit(5);
+    }
+
+    public void Hit(int damage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    IEnumerator DeathAnimEnds()
+    {
+         yield return new WaitForSeconds(2);
+
+         Destroy(gameObject);
     }
 }
