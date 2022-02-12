@@ -35,6 +35,33 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RMBClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""9867f6db-8964-4cea-b7ce-cf69136bc178"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LMBClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""8098aa0a-b8ab-4922-88eb-dec9f46c572e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""dad4db78-cf80-48a0-aea1-62b35a639ec7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -92,6 +119,39 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""997b8c4f-e788-4d8a-be14-94ddf0414b75"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RMBClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b140462-62b4-4d75-93f6-55cf00a4e46f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LMBClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc08bc21-c2c1-4c02-abca-7bffb81ffe00"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +161,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         // Player_Map
         m_Player_Map = asset.FindActionMap("Player_Map", throwIfNotFound: true);
         m_Player_Map_Movement = m_Player_Map.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Map_RMBClick = m_Player_Map.FindAction("RMBClick", throwIfNotFound: true);
+        m_Player_Map_LMBClick = m_Player_Map.FindAction("LMBClick", throwIfNotFound: true);
+        m_Player_Map_MousePosition = m_Player_Map.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,11 +224,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player_Map;
     private IPlayer_MapActions m_Player_MapActionsCallbackInterface;
     private readonly InputAction m_Player_Map_Movement;
+    private readonly InputAction m_Player_Map_RMBClick;
+    private readonly InputAction m_Player_Map_LMBClick;
+    private readonly InputAction m_Player_Map_MousePosition;
     public struct Player_MapActions
     {
         private @PlayerActions m_Wrapper;
         public Player_MapActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Map_Movement;
+        public InputAction @RMBClick => m_Wrapper.m_Player_Map_RMBClick;
+        public InputAction @LMBClick => m_Wrapper.m_Player_Map_LMBClick;
+        public InputAction @MousePosition => m_Wrapper.m_Player_Map_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -178,6 +247,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
+                @RMBClick.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRMBClick;
+                @RMBClick.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRMBClick;
+                @RMBClick.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRMBClick;
+                @LMBClick.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnLMBClick;
+                @LMBClick.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnLMBClick;
+                @LMBClick.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnLMBClick;
+                @MousePosition.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMousePosition;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -185,6 +263,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @RMBClick.started += instance.OnRMBClick;
+                @RMBClick.performed += instance.OnRMBClick;
+                @RMBClick.canceled += instance.OnRMBClick;
+                @LMBClick.started += instance.OnLMBClick;
+                @LMBClick.performed += instance.OnLMBClick;
+                @LMBClick.canceled += instance.OnLMBClick;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
         }
     }
@@ -192,5 +279,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     public interface IPlayer_MapActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnRMBClick(InputAction.CallbackContext context);
+        void OnLMBClick(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }
