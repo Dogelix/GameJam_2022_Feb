@@ -282,7 +282,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1717730854, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: _alerted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 498533508055720232, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: m_Name
@@ -439,7 +439,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1717730854, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: _alerted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 498533508055720232, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: m_Name
@@ -619,7 +619,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1717730854, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: _alerted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 498533508055720232, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: m_Name
@@ -680,7 +680,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1717730854, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: _alerted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1717730854, guid: a41d16a304cd09e4e8648bb62e0f05e6, type: 3}
       propertyPath: _overlapSphereRadius

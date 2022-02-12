@@ -92,6 +92,20 @@ CapsuleCollider:
   m_Height: 3.86
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &-9192306499921113804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498533508055720232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae902e6f7c438745b92b8c7d81ce816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderRadius: 5
+  wanderTimer: 2
 --- !u!195 &1717730852
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -126,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eeb5cfb2c90fe046a17c63128de3c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isMoving: 0
 --- !u!114 &1717730854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +155,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGizmos: 1
   _overlapSphereRadius: 15
+  _alerted: 0
+  multiplyBy: 0

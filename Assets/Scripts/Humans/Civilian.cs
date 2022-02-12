@@ -22,7 +22,6 @@ public class Civilian : MonoBehaviour, IHuman
     private Human _human;
 
     private Transform _startPosition;
-    private Vector3 _currentRoamTarget;
     
     private void Awake() 
     {
@@ -39,24 +38,23 @@ public class Civilian : MonoBehaviour, IHuman
     {
         if(_alerted)
         {
+            GetComponent<WanderingAI>().enabled = false;
+            _human._isMoving = true;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _overlapSphereRadius);
             if(hitColliders.Select(e => e.gameObject).Any(s => s.GetComponent<Zombie>() != null))
             {
+                Debug.Log(transform.name + " has seen the horde");
                 RunFrom();
             }
             else
             {
                 _alerted = false;
+                _human._isMoving = false;
             }
         }
         else
         {
-            var roamTarget = VectorUtils.RandomNavSphere(transform.position, _overlapSphereRadius, 0);
-            if(_currentRoamTarget == Vector3.zero || Vector3.Distance(_currentRoamTarget, transform.position) < 1)
-            {
-                _human.Target = roamTarget;
-                _currentRoamTarget = roamTarget;
-            }
+            GetComponent<WanderingAI>().enabled = true;
         }
     }
 

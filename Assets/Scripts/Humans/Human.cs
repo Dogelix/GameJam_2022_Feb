@@ -8,7 +8,7 @@ public class Human : MonoBehaviour, ICharacter
     private bool _dead = false;
     private IHuman _iHuman;
     private HordeManager _hordeManager;
-    private bool _isMoving = false;
+    public bool _isMoving = false;
     private int _hp = 5;
     private Vector3 _target;
     private NavMeshAgent _navMeshAgent;
@@ -47,17 +47,21 @@ public class Human : MonoBehaviour, ICharacter
 
     public void Walk()
     {
-        if(Vector3.Distance(transform.position, _target) > 1)
+        if(_isMoving) //active when alerted
         {
-            _navMeshAgent.SetDestination(_target);
-            _animator.SetBool("Static_b", false);
-            _animator.SetFloat("Speed_f", 0.45f);
+            if(Vector3.Distance(transform.position, _target) > 1)
+            {
+                _navMeshAgent.SetDestination(_target);
+                _animator.SetBool("Static_b", false);
+                _animator.SetFloat("Speed_f", 0.45f);
+            }
+            else
+            {
+                _animator.SetBool("Static_b", true);
+                _animator.SetFloat("Speed_f", 0f);
+            }
         }
-        else
-        {
-            _animator.SetBool("Static_b", true);
-            _animator.SetFloat("Speed_f", 0f);
-        }
+        
     }
 
     private void FixedUpdate() 

@@ -11,7 +11,7 @@ public class Zombie : MonoBehaviour, ICharacter
     [SerializeField]
     private int _minDamage = 1;
 
-    private GameObject _absoluteParent;
+    private HordeManager _hordeController;
     private bool _isMoving = false;
     private int _hp = 5;
     private Vector3 _target;
@@ -48,7 +48,7 @@ public class Zombie : MonoBehaviour, ICharacter
 
     private void Awake() 
     {
-        _absoluteParent = GameObjectFinderUtils.FindParentWithTag(gameObject, "Player");
+        _hordeController = GameObject.FindGameObjectWithTag("HordeManager").GetComponent<HordeManager>();
         _animator = gameObject.GetComponent<Animator>(); 
         _navMeshAgent = gameObject.GetComponent<NavMeshAgent>();   
     }
@@ -70,14 +70,16 @@ public class Zombie : MonoBehaviour, ICharacter
 
     public void Walk()
     {
-        if(Vector3.Distance(transform.position, _target) > 1)
+        if(Vector3.Distance(_hordeController.CenterOfHorde, _target) > 3)
         {
             _navMeshAgent.SetDestination(_target);
             _animator.SetBool("Walking", true);
+            _navMeshAgent.isStopped = false;
         }
         else
         {
             _animator.SetBool("Walking", false);
+            _navMeshAgent.isStopped = true;
         }
     }
 

@@ -18,16 +18,15 @@ public static class VectorUtils
         return bound.center;
     }
 
-    public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) 
-    {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
-
-        randomDirection += origin;
-
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {
+        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
+ 
+        randDirection += origin;
+ 
         NavMeshHit navHit;
-
-        NavMesh.SamplePosition (randomDirection, out navHit, distance, layermask);
-
+ 
+        NavMesh.SamplePosition (randDirection, out navHit, dist, layermask);
+ 
         return navHit.position;
     }
 }
