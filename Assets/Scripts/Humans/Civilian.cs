@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-//[RequireComponent(typeof(Cylinder))]
 public class Civilian : MonoBehaviour, IHuman
 {
     [SerializeField]
