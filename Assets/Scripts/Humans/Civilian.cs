@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 //[RequireComponent(typeof(Cylinder))]
 public class Civilian : MonoBehaviour, IHuman
@@ -36,26 +37,7 @@ public class Civilian : MonoBehaviour, IHuman
 
     private void FixedUpdate() 
     {
-        if(_alerted)
-        {
-            GetComponent<WanderingAI>().enabled = false;
-            _human._isMoving = true;
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _overlapSphereRadius);
-            if(hitColliders.Select(e => e.gameObject).Any(s => s.GetComponent<Zombie>() != null))
-            {
-                Debug.Log(transform.name + " has seen the horde");
-                RunFrom();
-            }
-            else
-            {
-                _alerted = false;
-                _human._isMoving = false;
-            }
-        }
-        else
-        {
-            GetComponent<WanderingAI>().enabled = true;
-        }
+        GetComponent<WanderingAI>().enabled = true;
     }
 
     public void RunFrom()
@@ -86,6 +68,11 @@ public class Civilian : MonoBehaviour, IHuman
 
         // And get it to head towards the found NavMesh position
         _human.Target = hit.position;
+    }
+
+    public void Alert()
+    {
+        _alerted = true;
     }
 
     private void OnDrawGizmos() 

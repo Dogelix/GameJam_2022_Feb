@@ -23,6 +23,9 @@ public class HordeManager : MonoBehaviour
     {
         _zombies = new List<Zombie>();
         GetZombiesInHorde();
+
+        _centerOfHorde = VectorUtils.GetCenterPoint(_zombies.Select(e => e.transform.position).ToList());
+        MoveZombies(_centerOfHorde);
     }
 
     public void MoveZombies(Vector3 moveLocation)

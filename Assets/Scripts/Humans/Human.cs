@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Human : MonoBehaviour, ICharacter
 {   
+    [SerializeField]
+    private float _alertRange = 5f;
+
     private bool _dead = false;
     private IHuman _iHuman;
     private HordeManager _hordeManager;
@@ -72,6 +76,16 @@ public class Human : MonoBehaviour, ICharacter
 
     public void Hit(int damage)
     {
+        Debug.Log($"{gameObject.name} hit for {damage}");
         _hp -= damage;
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _alertRange);
+        var civiliansInRange = hitColliders.Select(e => e.gameObject).Where(e => e.GetComponent<Civilian>() != null).ToArray();
+
+        foreach(var civ in civiliansInRange)
+        {
+            Debug.Log($"{civ.name} alerted by {gameObject.name}");
+            civ.GetComponent<Civilian>().Alert();
+        }
     }
 }
